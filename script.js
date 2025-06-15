@@ -1,0 +1,54 @@
+  const form = document.getElementById("courseForm");
+  const popup = document.getElementById("popupMessage");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    // Ask for payment screenshot confirmation before form submission
+    const hasSent = confirm("Have you sent the payment screenshot to WhatsApp (+91 93422 45687)? This is required to confirm registration.");
+    if (!hasSent) {
+      alert("❗ Please send the payment proof via WhatsApp before proceeding.");
+      return;
+    }
+
+    // Proceed to submit the form
+    const formData = new FormData(form);
+
+    fetch(form.action, {
+      method: "POST",
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.ok) {
+          popup.textContent = "✅ Registration Successful! Thank you.";
+          popup.classList.add("show");
+          form.reset();
+        } else {
+          popup.textContent = "❌ Something went wrong. Try again.";
+          popup.classList.add("show");
+        }
+
+        // Auto-hide popup after 5 seconds
+        setTimeout(() => {
+          popup.classList.remove("show");
+        }, 5000);
+      })
+      .catch(error => {
+        popup.textContent = "⚠️ Error submitting form.";
+        popup.classList.add("show");
+        console.error("Error:", error);
+
+        // Auto-hide on error too
+        setTimeout(() => {
+          popup.classList.remove("show");
+        }, 5000);
+      });
+  });
+
+  // Hide the popup on click (optional)
+  popup.addEventListener("click", function () {
+    popup.classList.remove("show");
+  });
