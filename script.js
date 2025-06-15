@@ -33,7 +33,7 @@
       form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const hasSent = confirm("Have you sent the payment screenshot to WhatsApp (+91 93422 45697)? This is required to confirm registration.");
+    const hasSent = confirm("Have you sent the payment screenshot to WhatsApp (+91 93422 45687)? This is required to confirm registration.");
     if (!hasSent) {
         alert("❗ Please send the payment proof via WhatsApp before proceeding.");
         return;
